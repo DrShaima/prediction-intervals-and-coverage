@@ -10,25 +10,25 @@ For a prediction location $x_0$, define the column vector $\mathbf{z}_0=(1,x_0)^
 
 **Leverage and estimated residual variance**
 
-$
+```math
 h_0=\mathbf{z}_0^\top(X^\top X)^{-1}\mathbf{z}_0,
 \qquad
 s^2=\frac{\sum_{i=1}^{n}(y_i-\widehat{y}_i)^2}{n-2}.
-$
+```
 
 Here $n$ is the training sample size; $n-2$ is the residual degrees of freedom for an intercept and slope.
 
 **95% confidence interval for the mean response at $x_0$**
 
-$
+```math
 \widehat{y}_0 \;\pm\; t_{0.975,\,n-2}\,s\sqrt{h_0}.
-$
+```
 
 **95% prediction interval for one future response at $x_0$**
 
-$
+```math
 \widehat{y}_0 \;\pm\; t_{0.975,\,n-2}\,s\sqrt{1+h_0}.
-$
+```
 
 The extra $1$ includes future observation noise. The quantity $t_{0.975,\,n-2}$ is the 97.5th percentile of Student's $t$ distribution with $n-2$ degrees of freedom.
 
@@ -37,23 +37,23 @@ We fit a straight line in all three scenarios: correct linear mean and constant 
 
 For $B$ independent simulation replications, observed coverage at $x_0$ is
 
-$
+```math
 \widehat{c}(x_0)=\frac{1}{B}\sum_{b=1}^{B}
 \mathbf{1}\!\left\{L_b(x_0)\leq Y_b^{\mathrm{new}}(x_0)\leq U_b(x_0)\right\}.
-$
+```
 
 Here $[L_b(x_0),U_b(x_0)]$ is the prediction interval in replication $b$, and the indicator equals one when it captures the future response. Mean interval width is
 
-$
+```math
 \overline{w}(x_0)=\frac{1}{B}\sum_{b=1}^{B}\left[U_b(x_0)-L_b(x_0)\right].
-$
+```
 
 The estimated Monte Carlo standard error is
 
-$
+```math
 \widehat{\mathrm{MCSE}}\!\left[\widehat{c}(x_0)\right]
 =\sqrt{\frac{\widehat{c}(x_0)\left[1-\widehat{c}(x_0)\right]}{B}}.
-$
+```
 
 The plotted error bars are $\widehat{c}(x_0)\pm1.96\,\widehat{\mathrm{MCSE}}$.
 
