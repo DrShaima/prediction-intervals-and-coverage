@@ -45,11 +45,14 @@ with open('assets/coverage.csv','w') as f:
     writer=csv.writer(f);writer.writerow(['scenario','x','coverage','MCSE','mean_width']);writer.writerows(rows)
 fig,axs=plt.subplots(1,2,figsize=(11,4.5))
 for k,s in enumerate(sorted(set(r[0] for r in rows))):
-    rr=[r for r in rows if r[0]==s]; xx=np.array([r[1] for r in rr])+(.025*(k-1))
-    axs[0].errorbar(xx,[r[2] for r in rr],yerr=[1.96*r[3] for r in rr],fmt='o-',label=s,color=['#123b64','#3986b9','#70b4cc'][k])
+    rr=[r for r in rows if r[0]==s]; xx=np.array([r[1] for r in rr])
+    ph=np.array([r[2] for r in rr]); zc=1.95996398454; den=1+zc**2/B; cen=(ph+zc**2/(2*B))/den; half=zc*np.sqrt(ph*(1-ph)/B+zc**2/(4*B**2))/den
+    axs[0].errorbar(xx,ph,yerr=np.maximum(0,np.vstack([ph-cen+half,cen+half-ph])),capsize=4,fmt='o-',label=s,color=['#123b64','#3986b9','#70b4cc'][k])
     axs[1].plot(xx,[r[4] for r in rr],'o-',label=s,color=['#123b64','#3986b9','#70b4cc'][k])
-axs[0].axhline(.95,color='gray',ls='--');axs[0].set(ylabel='Observed coverage',xlabel='Fixed prediction location x',title='Coverage: error bars = ±1.96 MCSE',ylim=(.65,1))
+axs[0].axhline(.95,color='gray',ls='--');axs[0].set(ylabel='Observed coverage',xlabel='Fixed prediction location x',title='Coverage: 95% Wilson intervals',ylim=(.65,1.025))
 axs[1].set(ylabel='Mean prediction interval width',xlabel='Fixed prediction location x',title='Width alone cannot establish reliability')
+
+for ax in axs: ax.set_xticks(points)
 axs[1].legend(fontsize=8);save(fig,'coverage-and-width')
 correct=[r for r in rows if r[0].startswith('Correct')]
 assert all(abs(r[2]-.95)<5*r[3] for r in correct)

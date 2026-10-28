@@ -55,7 +55,7 @@ The estimated Monte Carlo standard error is
 =\sqrt{\frac{\widehat{c}(x_0)\left[1-\widehat{c}(x_0)\right]}{B}}.
 ```
 
-The plotted error bars are $\widehat{c}(x_0)\pm1.96\,\widehat{\mathrm{MCSE}}$.
+The plotted error bars are 95% Wilson score intervals for the binomial coverage probability, including at observed coverage 100%. Markers use the exact prediction locations without horizontal offsets.
 
 These error bars quantify simulation error approximately; they are not prediction intervals. At observed coverage 0 or 1, plug-in MCSE is zero but this does not prove zero simulation uncertainty; use a binomial boundary interval for inference there. Outcomes at different x share training data and are correlated, so we do not pool them as independent trials. Misspecification can distort local coverage even if average coverage looks satisfactory.
 
